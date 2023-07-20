@@ -2,7 +2,6 @@ import { ToastContainer } from "react-toastify";
 import { makeStyles } from "@mui/styles";
 import { CssBaseline } from "@mui/material";
 import Bgimage from "./assets/bgimg.jpg"
-import Header from "./components/Header";
 import LoginForm from "./components/Login";
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from "./components/Home";
@@ -19,7 +18,6 @@ function App() {
   return (
     <div className={classes.root}>
       <CssBaseline/>
-      <Header/>
       <BrowserRouter>
         <Routes>
           <Route path = "/" exact element = {<Home/>}></Route>

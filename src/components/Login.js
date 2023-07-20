@@ -6,6 +6,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import {useNavigate} from 'react-router-dom';
+import Header from './Header';
 const firebaseConfig = {
   apiKey: "AIzaSyCXVvpIH4wN_SEqC7UJk757SPPbKx6kcY0",
   authDomain: "pulsecare-b4ad6.firebaseapp.com",
@@ -56,31 +57,34 @@ const LoginForm = () => {
     };
     const classes = useStyles();
     return (
-        <form onSubmit={handleSubmit} className={classes.form}>
-        <TextField
-            label="Username"
-            variant="outlined"
-            className= {classes.textField}
-            value={username}
-            margin="normal"
-            onChange={usernamechange}
-        />
-        <TextField
-            label="Password"
-            variant="outlined"
-            type="password"
-            value={password}
-            className={classes.textField}
-            margin="normal"
-            onChange={pwdchange}
-        />
-        <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>
-            Submit
-        </Button>
-        <Typography variant="body2" align="center">
-            Don't have an account? <Link href="/signup">Sign up</Link>
-        </Typography>
-        </form>
+        <div>
+            <Header/>
+            <form onSubmit={handleSubmit} className={classes.form}>
+            <TextField
+                label="Username"
+                variant="outlined"
+                className= {classes.textField}
+                value={username}
+                margin="normal"
+                onChange={usernamechange}
+            />
+            <TextField
+                label="Password"
+                variant="outlined"
+                type="password"
+                value={password}
+                className={classes.textField}
+                margin="normal"
+                onChange={pwdchange}
+            />
+            <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>
+                Submit
+            </Button>
+            <Typography variant="body2" align="center">
+                Don't have an account? <Link href="/signup">Sign up</Link>
+            </Typography>
+            </form>
+        </div>
   );
 };
 

@@ -1,10 +1,7 @@
-
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, ThemeProvider, Typography, createTheme } from "@mui/material";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { makeStyles } from "@mui/styles";
-import { initializeApp } from "firebase/app";
-let pr = ''
-let temp = ''
+import Header from "./Header";
 export const theme = createTheme({
     palette : {
         background  : 'none'
@@ -18,7 +15,8 @@ const useStyles = makeStyles((theme)=>({
     },
     container : {
         display : 'flex',
-        justifyContent : 'center',
+        flexDirection : 'column',
+        justifyContent : 'space-around',
         alignItems  :'center',
         height : '100vh',
     },
@@ -33,76 +31,61 @@ const useStyles = makeStyles((theme)=>({
         justifyContent : "space-around",
         alignItems : "center",
     },
+    text : {
+        backgroundColor : "white", width:"100%"
+    },
+    msg : {
+        backgroundColor : "#422715", 
+        width: "70vh",
+        textAlign : "center",
+        color : "white",
+        borderRadius : "10px"
+    }
 }))
-const firebaseConfig = {
-  apiKey: "AIzaSyCXVvpIH4wN_SEqC7UJk757SPPbKx6kcY0",
-  authDomain: "pulsecare-b4ad6.firebaseapp.com",
-  projectId: "pulsecare-b4ad6",
-  storageBucket: "pulsecare-b4ad6.appspot.com",
-  messagingSenderId: "974009132259",
-  appId: "1:974009132259:web:b7d988f25275d52d2c91d6"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-// class City {
-//     constructor (pr,temp ) {
-//         this.pr = pr;
-//         this.temp = temp;
-//     }
-//     toString() {
-//         return this.pr + ', ' + this.temp;
-//     }
-// }
-
-// Firestore data converter
-// const converter = {
-//     toFirestore: (details) => {
-//         return {
-//             pr: details.pr,
-//             temp: details.state,
-//             };
-//     },
-//     fromFirestore: (snapshot, options) => {
-//         const data = snapshot.data(options);
-//         return new City(data.pr, data.temp,);
-//     }
-// };
-const fetchdata = () =>{
-    getDocs(collection(db,"users")).then((querysnapshot)=>{
-        querysnapshot.forEach((doc)=>{        
-            const values = {...doc.data()}
-            pr = values.pr
-            temp = values.temp
-            console.log(pr,temp);
-        })
-    })
-}
 
 export default function Home(){
     const classes = useStyles();
-    fetchdata();
-    console.log(pr,temp)
+    const [data, setData] = useState(null);
+    useEffect(() => {
+    fetch('http://127.0.0.1:4000',{
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => setData(data));
+    }, []);
+    let list = []
+    if(data == null){
+        console.log(data);
+    }
+    else{
+        list = [data.pr,data.temp,data.body];
+    }
     return (
     <ThemeProvider theme={theme}>
         <div className={classes.container}>
+            <Header/>
             <Card className={classes.root}>
                 <CardContent className={classes.content}>
-                    <Typography variant="h5" component="h2" sx={{backgroundColor : "#4169E1", width:"100%"}}>
+                    <Typography variant="h5" component="h2" className={classes.text}>
                         Pulse rate
                     </Typography>
-                    <Typography variant="h5" component="h2" sx={{backgroundColor : "white", width:"100%"}}>
-                         {pr} BPM
+                    <Typography variant="h5" component="h2" className={classes.text}>
+                          {list[0]} BPM
                     </Typography>
-                    <Typography variant="h5" component="h2" sx={{backgroundColor : "#4169E1", width:"100%"}}>
+                    <Typography variant="h5" component="h2" className={classes.text}>
                         Temperature
                     </Typography>
-                    <Typography variant="h5" component="h2" sx={{backgroundColor : "white", width:"100%"}}>
-                        {temp} *C
+                    <Typography variant="h5" component="h2" className={classes.text}>
+                        {list[1]} °C
                     </Typography>
                 </CardContent>
             </Card>
+            <Typography variant="h3" component="h2" className={classes.msg}>
+                    {list[2]}
+            </Typography>
         </div>
     </ThemeProvider>
     )
