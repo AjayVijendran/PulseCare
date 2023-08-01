@@ -2,7 +2,7 @@
 ## A remote patient health monitoring system
 <p align="center">
     <a href="/">
-    <img src="src\assets\bgimg.jpg">
+    <img src="src\assets\logo.jpg">
 </p>
 
 # Getting Started with Create React App
