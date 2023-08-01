@@ -28,8 +28,8 @@ We collect real-time vitals data of patients with the help of an analag temperat
 ## Instructions
 
 
-1. `git clone https://github.com/Apurva-tech/unite.git` 
-2. `cd ./unite`
+1. `git clone https://github.com/AjayVijendran/PulseCare.git` 
+2. `cd ./PulseCare`
 3. Install node dependencies 
    - `npm install`
 4. `npm run dev`
